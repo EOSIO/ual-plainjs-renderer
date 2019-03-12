@@ -1,6 +1,6 @@
 import { Scatter } from '@blockone/ual-scatter'
 import { User } from '@blockone/universal-authenticator-library'
-import { UALJs } from '@blockone/universal-authenticator-library-plain-js-renderer'
+import { UALJs } from '@blockone/ual-plainjs-renderer'
 import { JsonRpc } from 'eosjs'
 import { MockAuthenticator } from './AuthMocks'
 import demoTransaction from './demo-transaction'
