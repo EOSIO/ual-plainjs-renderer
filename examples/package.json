@@ -35,7 +35,7 @@
     "@babel/runtime": "7.2.0",
     "@blockone/ual-scatter": "0.0.22",
     "@blockone/universal-authenticator-library": "0.0.33",
-    "@blockone/universal-authenticator-library-plain-js-renderer": "0.0.14",
+    "@blockone/ual-plainjs-renderer": "0.0.14",
     "eosjs": "20.0.0-beta3",
     "js-sha256": "^0.9.0"
   }
