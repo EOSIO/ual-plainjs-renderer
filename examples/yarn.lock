@@ -17,6 +17,13 @@
     tslint "^5.11.0"
     tslint-eslint-rules "^5.4.0"
 
+"@blockone/ual-plainjs-renderer@0.0.14":
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@blockone/ual-plainjs-renderer/-/ual-plainjs-renderer-0.0.14.tgz#9df8e50346fb7242ac4d959d9ac453ad13cb45b5"
+  integrity sha512-PdP2XA5IIu8TWK3gU+8+xWMx9AOFcx+6Q13TYINb8kRMyyFNMNFw+m3/IjA2HxGOWILoeMXrKJAcLe52lbuMgA==
+  dependencies:
+    "@blockone/universal-authenticator-library" "0.0.33"
+
 "@blockone/ual-scatter@0.0.22":
   version "0.0.22"
   resolved "https://registry.yarnpkg.com/@blockone/ual-scatter/-/ual-scatter-0.0.22.tgz#b7b463626f10658a1055f92dfbe6e89ee70a03f5"
@@ -27,13 +34,6 @@
     eosjs-ecc "^4.0.4"
     scatterjs-core "^2.5.0"
     scatterjs-plugin-eosjs2 "^1.2.0"
-
-"@blockone/universal-authenticator-library-plain-js-renderer@0.0.14":
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/@blockone/universal-authenticator-library-plain-js-renderer/-/universal-authenticator-library-plain-js-renderer-0.0.14.tgz#63361fc109e9a5a08ff2bda29d4c84580a2ce2b4"
-  integrity sha512-GWS9N59b6FyZUi28onnDEP4ovBEIFJQ3Yodlod/u6E6Lr5jOh5iX3zTKRlaeMp84Xcq4BDlL292IJFHG97vFVA==
-  dependencies:
-    "@blockone/universal-authenticator-library" "0.0.33"
 
 "@blockone/universal-authenticator-library@0.0.33":
   version "0.0.33"

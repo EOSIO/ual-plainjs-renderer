@@ -7,7 +7,7 @@ It uses nothing but standard Javascript and should be supported across desktop a
 ## Getting Started
 #### With ``yarn``
 ```bash
-yarn add @blockone/universal-authenticator-library-plain-js-renderer
+yarn add @blockone/ual-plainjs-renderer
 ```
 Then, install the authenticators that you wish to use...
 ```bash
@@ -15,7 +15,7 @@ yarn add @blockone/ual-scatter @blockone/ual-lynx
 ```
 #### With ``npm``
 ```bash
-npm i @blockone/universal-authenticator-library-plain-js-renderer
+npm i @blockone/ual-plainjs-renderer
 ```
 Then, install the authenticators that you wish to use...
 ```bash
@@ -26,7 +26,7 @@ npm i @blockone/ual-scatter @blockone/ual-lynx
 ## Basic Usage
 The below code will render a button to the DOM that will launch the Universal Authenticator Library modal.
 ```javascript
-import { UALJs } from '@blockone/universal-authenticator-library-plain-js-renderer'
+import { UALJs } from '@blockone/ual-plainjs-renderer'
 import { Scatter } from '@blockone/ual-scatter'
 import { Lynx } from '@blockone/ual-lynx'
 
@@ -78,7 +78,7 @@ These values can be edited according to the particulars of your project.  They w
 *See the [js example](https://github.com/EOSIO/universal-authenticator-library/tree/develop/examples) for more details.*
 
 ## Development
-After you set up your environment you can begin development.  Make sure you are back in the ``/`` directory of the ``universal-authenticator-library-plain-js-renderer`` package.
+After you set up your environment you can begin development.  Make sure you are back in the ``/`` directory of the ``ual-plainjs-renderer`` package.
 ```bash
 yarn
 yarn link
@@ -88,7 +88,7 @@ yarn build -w
 In a duplicate terminal tab, enter the following commands:
 ```bash
 cd examples
-yarn link @blockone/universal-authenticator-library-plain-js-renderer
+yarn link @blockone/ual-plainjs-renderer
 yarn
 yarn example
 ```
