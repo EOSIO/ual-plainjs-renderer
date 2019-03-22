@@ -1,4 +1,4 @@
-# UAL PlainJS Renderer
+# UAL Renderer for PlainJS
 
 This library providers a Plain JS renderer around the [Universal Authenticator Library](https://github.com/EOSIO/universal-authenticator-library/). 
 
