@@ -1,6 +1,6 @@
-# UAL PlainJS Example App
+# Basic Example App for UAL with PlainJS
 
-This example demonstrates an implementation of the [Universal Authenticator Library JS Renderer](https://github.com/EOSIO/ual-plainjs-renderer) in a simple EOS transfer DAPP.  It uses the [UAL Scatter Authenticator](https://github.com/EOSIO/ual-scatter).
+This example demonstrates an implementation of the [Universal Authenticator Library Renderer for PlainJS](https://github.com/EOSIO/ual-plainjs-renderer) in a simple EOS transfer DAPP.  It uses the [UAL for Scatter Authenticator](https://github.com/EOSIO/ual-scatter).
 
 ## Setup
 ```bash
