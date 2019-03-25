@@ -75,7 +75,7 @@ RPC_HOST=api.example.net
 RPC_PORT=443
 ```
 These values can be edited according to the particulars of your project.  They will be used as the chain data in the example app.
-*See the [js example](https://github.com/EOSIO/universal-authenticator-library/tree/develop/examples) for more details.*
+*See the [Basic Example App for UAL with PlainJS](https://github.com/EOSIO/ual-plainjs-renderer/tree/develop/examples) for more details.*
 
 ## Development
 After you set up your environment you can begin development.  Make sure you are back in the ``/`` directory of the ``ual-plainjs-renderer`` package.
