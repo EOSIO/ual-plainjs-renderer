@@ -1,4 +1,4 @@
-# UAL Renderer for PlainJS
+# UAL Renderer for PlainJS ![EOSIO Alpha](https://img.shields.io/badge/EOSIO-Alpha-blue.svg)
 
 This library providers a Plain JS renderer around the [Universal Authenticator Library](https://github.com/EOSIO/universal-authenticator-library/). 
 
@@ -99,13 +99,13 @@ Open a browser at `localhost:3000` to see a running instance of the example.
 
 ## Contributing
 
-[Contributing Guide](https://github.com/EOSIO/universal-authenticator-library/blob/develop/CONTRIBUTING.md)
+[Contributing Guide](./CONTRIBUTING.md)
 
-[Code of Conduct](https://github.com/EOSIO/universal-authenticator-library/blob/develop/CONTRIBUTING.md#conduct)
+[Code of Conduct](./CONTRIBUTING.md#conduct)
 
 ## License
 
-[MIT](https://github.com/EOSIO/universal-authenticator-library/blob/develop/LICENSE)
+[MIT](./LICENSE)
 
 ## Important
 
