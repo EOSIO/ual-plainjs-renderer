@@ -1,34 +1,34 @@
 # UAL Renderer for PlainJS ![EOSIO Alpha](https://img.shields.io/badge/EOSIO-Alpha-blue.svg)
 
-This library providers a Plain JS renderer around the [Universal Authenticator Library](https://github.com/EOSIO/universal-authenticator-library/). 
+This library providers a Plain JS renderer around the [Universal Authenticator Library](https://github.com/EOSIO/universal-authenticator-library/).
 
 It uses nothing but standard Javascript and should be supported across desktop and mobile.
 
 ## Getting Started
 #### With ``yarn``
 ```bash
-yarn add @blockone/ual-plainjs-renderer
+yarn add ual-plainjs-renderer
 ```
 Then, install the authenticators that you wish to use...
 ```bash
-yarn add @blockone/ual-scatter @blockone/ual-lynx
+yarn add ual-scatter ual-lynx
 ```
 #### With ``npm``
 ```bash
-npm i @blockone/ual-plainjs-renderer
+npm i ual-plainjs-renderer
 ```
 Then, install the authenticators that you wish to use...
 ```bash
-npm i @blockone/ual-scatter @blockone/ual-lynx
+npm i ual-scatter ual-lynx
 ```
 
 
 ## Basic Usage
 The below code will render a button to the DOM that will launch the Universal Authenticator Library modal.
 ```javascript
-import { UALJs } from '@blockone/ual-plainjs-renderer'
-import { Scatter } from '@blockone/ual-scatter'
-import { Lynx } from '@blockone/ual-lynx'
+import { UALJs } from 'ual-plainjs-renderer'
+import { Scatter } from 'ual-scatter'
+import { Lynx } from 'ual-lynx'
 
 const myCallback = arrayOfUsers => {
   // Execute on successful user authentication
@@ -88,7 +88,7 @@ yarn build -w
 In a duplicate terminal tab, enter the following commands:
 ```bash
 cd examples
-yarn link @blockone/ual-plainjs-renderer
+yarn link ual-plainjs-renderer
 yarn
 yarn example
 ```
