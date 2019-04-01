@@ -1,4 +1,4 @@
-import { Authenticator, Chain, UAL, User } from '@blockone/universal-authenticator-library'
+import { Authenticator, Chain, UAL, User } from 'universal-authenticator-library'
 import { UALJsDom } from './UALJsDom'
 
 /**

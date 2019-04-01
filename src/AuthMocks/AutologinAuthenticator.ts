@@ -1,4 +1,4 @@
-import { Authenticator, ButtonStyle, User } from '@blockone/universal-authenticator-library'
+import { Authenticator, ButtonStyle, User } from 'universal-authenticator-library'
 
 export class AutologinAuthenticator extends Authenticator {
   public init(): Promise<void> {

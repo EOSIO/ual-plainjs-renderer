@@ -18,7 +18,7 @@ module.exports = {
         test: /\.(js)$/,
         exclude: /node_modules/,
         include: [
-          '/node_modules/@blockone/universal-authenticator-library',
+          '/node_modules/universal-authenticator-library',
         ],
         use: ["babel-loader"]
       },

@@ -1,4 +1,4 @@
-import { ButtonStyle } from '@blockone/universal-authenticator-library'
+import { ButtonStyle } from 'universal-authenticator-library'
 import { BaseMockAuthenticator } from '../AuthMocks/BaseMockAuthenticator'
 import { DownloadAuthenticatorModal } from './DownloadAuthenticatorModal'
 
