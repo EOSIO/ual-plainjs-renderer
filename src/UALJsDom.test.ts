@@ -1,8 +1,7 @@
-import { User } from '@blockone/universal-authenticator-library'
 import 'jest-localstorage-mock'
+import { Authenticator, User } from 'universal-authenticator-library'
 import { UALJsDom } from './UALJsDom'
 
-import { Authenticator } from '@blockone/universal-authenticator-library'
 import { BaseMockAuthenticator } from './AuthMocks/BaseMockAuthenticator'
 
 describe('Authenticators', () => {

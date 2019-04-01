@@ -1,4 +1,4 @@
-import { Authenticator, UALError, UALErrorType } from '@blockone/universal-authenticator-library'
+import { Authenticator, UALError, UALErrorType } from 'universal-authenticator-library'
 import { AccountInputModal } from './components/AccountInputModal'
 import { AuthButton } from './components/AuthButton'
 import { DownloadAuthenticatorModal } from './components/DownloadAuthenticatorModal'

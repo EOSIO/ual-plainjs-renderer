@@ -1,5 +1,5 @@
-import { User } from '@blockone/universal-authenticator-library'
 import 'jest-localstorage-mock'
+import { User } from 'universal-authenticator-library'
 import { UALJs } from './UALJs'
 
 import { AutologinAuthenticator } from './AuthMocks/AutologinAuthenticator'
