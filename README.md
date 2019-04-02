@@ -80,7 +80,7 @@ RPC_PROTOCOL=https
 RPC_HOST=api.example.net
 RPC_PORT=443
 ```
-These values can be edited according to the particulars of your project.  They will be used as the chain data in the example app.
+These values are taken from the local chain created by following the [Developer Portal node set up instructions](https://developers.eos.io/eosio-home/docs/getting-the-software). _(Note: if this is your first time following the tutorial you will need to install the eosio binaries [here](https://developers.eos.io/eosio-home/docs/setting-up-your-environment))._  These can be edited according to the requirements of your project if you have a different chain set up.  They will be used as the chain data in the example app.
 *See the [Basic Example App for UAL with PlainJS](https://github.com/EOSIO/ual-plainjs-renderer/tree/develop/examples) for more details.*
 
 ## Development
