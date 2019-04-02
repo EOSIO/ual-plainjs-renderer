@@ -7,7 +7,7 @@ import {
   UALError,
   UALErrorType,
   User
-} from '@blockone/universal-authenticator-library'
+} from 'universal-authenticator-library'
 
 const signatureResponse = {
   wasBroadcast: true,

@@ -18,7 +18,7 @@
     "prepare": "yarn build"
   },
   "dependencies": {
-    "universal-authenticator-library": "0.0.35"
+    "universal-authenticator-library": "0.1.0"
   },
   "devDependencies": {
     "@blockone/tslint-config-blockone": "1.0.0",

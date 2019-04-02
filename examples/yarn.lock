@@ -17,34 +17,6 @@
     tslint "^5.11.0"
     tslint-eslint-rules "^5.4.0"
 
-"@blockone/ual-plainjs-renderer@0.0.14":
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/@blockone/ual-plainjs-renderer/-/ual-plainjs-renderer-0.0.14.tgz#9df8e50346fb7242ac4d959d9ac453ad13cb45b5"
-  integrity sha512-PdP2XA5IIu8TWK3gU+8+xWMx9AOFcx+6Q13TYINb8kRMyyFNMNFw+m3/IjA2HxGOWILoeMXrKJAcLe52lbuMgA==
-  dependencies:
-    "@blockone/universal-authenticator-library" "0.0.33"
-
-"@blockone/ual-scatter@0.0.22":
-  version "0.0.22"
-  resolved "https://registry.yarnpkg.com/@blockone/ual-scatter/-/ual-scatter-0.0.22.tgz#b7b463626f10658a1055f92dfbe6e89ee70a03f5"
-  integrity sha512-C8KRAP3w6aQ4Ts9Ed0vLjVHQ1uY3c1w7X/B5RagejIH/7pxsaq7PGdk+EhFu7eEvs7KO8UxPazt+1/4C/wcucQ==
-  dependencies:
-    "@blockone/universal-authenticator-library" "^0.0.32"
-    eosjs "20.0.0-beta2"
-    eosjs-ecc "^4.0.4"
-    scatterjs-core "^2.5.0"
-    scatterjs-plugin-eosjs2 "^1.2.0"
-
-"@blockone/universal-authenticator-library@0.0.33":
-  version "0.0.33"
-  resolved "https://registry.yarnpkg.com/@blockone/universal-authenticator-library/-/universal-authenticator-library-0.0.33.tgz#759f9b81bdbb81066df12ea8f9279bf87a459127"
-  integrity sha512-GRrSo83o7ko0xDKoUvL1nL3V3u2QNrBLIlrUF/gWaBn/81GPjA8etcq+ok+jn6/4vGlum5nJtuV5MyIRUqQg9g==
-
-"@blockone/universal-authenticator-library@^0.0.32":
-  version "0.0.32"
-  resolved "https://registry.yarnpkg.com/@blockone/universal-authenticator-library/-/universal-authenticator-library-0.0.32.tgz#995d847489a9302ff050ec0c8ec17473d484a64c"
-  integrity sha512-Ijls6HsCtn9Mlqct7KrbkGl2+96rl2CALkcmj5HV28Q8HKZT/Id59yxgszPqSS4VEQnF9NPfHeq/yhPXFKuaaQ==
-
 "@types/jest@^23.3.1":
   version "23.3.14"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.14.tgz#37daaf78069e7948520474c87b80092ea912520a"
@@ -1870,7 +1842,7 @@ entities@~1.1.1:
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
 
-eosjs-ecc@^4.0.1, eosjs-ecc@^4.0.4:
+eosjs-ecc@4.0.4, eosjs-ecc@^4.0.1:
   version "4.0.4"
   resolved "https://registry.yarnpkg.com/eosjs-ecc/-/eosjs-ecc-4.0.4.tgz#431450f30a6f73088ff5d7ba1ebdfe967a5ca4ab"
   integrity sha512-9wAYefts4TidHOu+eN9nAisZdWpUzlUimZrB63oP7+/s4xRNJEn2Vvep2ICRODpxpidbshM1L7WaSYW9oiV5gA==
@@ -4311,10 +4283,10 @@ sax@^1.2.4:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
 
-scatterjs-core@^2.5.0:
-  version "2.7.9"
-  resolved "https://registry.yarnpkg.com/scatterjs-core/-/scatterjs-core-2.7.9.tgz#ffc5e5da5af3feab4d0023b9e67d217c612f5e88"
-  integrity sha512-y1ES8PLSmpJgczMbSi/EfvB97OEmrV+2jtZcwZ/q4X9AFA3fPafXJgzgv8ptld463q2H/iV0D7v6wKyKAQk+Tg==
+scatterjs-core@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/scatterjs-core/-/scatterjs-core-2.5.0.tgz#e23d1d40bebeb861c4375a7427392b3cb795dca1"
+  integrity sha512-Senfn+cihffudC7/katFr5fs4QayOgHKjlgmBJM9cBnESA+JO2wWgJ72LY9LwyJNHnepe3smf0Xjgo4XUAn00Q==
   dependencies:
     create-hash "^1.2.0"
     es6-promise "^4.2.4"
@@ -4863,6 +4835,24 @@ typescript@^3.2.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.3.tgz#f1657fc7daa27e1a8930758ace9ae8da31403221"
   integrity sha512-Y21Xqe54TBVp+VDSNbuDYdGw0BpoR/Q6wo/+35M8PAU0vipahnyduJWirxxdxjsAkS7hue53x2zp8gz7F05u0A==
 
+ual-plainjs-renderer@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/ual-plainjs-renderer/-/ual-plainjs-renderer-0.1.0.tgz#13e2368ab0dad2c8956505223ec53b2c14766edc"
+  integrity sha512-IJGLZT++/uKZJTPHGmyaz6ieKvKV4v2R5eSV7y4gEhHWrKLZBRu9BrvPjKfsGf69VemovbbRG9s9AG92tWOINQ==
+  dependencies:
+    universal-authenticator-library "0.1.0"
+
+ual-scatter@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/ual-scatter/-/ual-scatter-0.1.0.tgz#9a197aa27aad1d861a061a927620bda1077a4797"
+  integrity sha512-yXJ6shHN3NQmdcmCI0sZcrEOV4lyykQExfQaual1NpFqDKJnWI6EfKZrgsbtGaOTpQV9F4jK5Nsev8BY3/l3Zw==
+  dependencies:
+    eosjs "20.0.0-beta2"
+    eosjs-ecc "4.0.4"
+    scatterjs-core "2.5.0"
+    scatterjs-plugin-eosjs2 "^1.2.0"
+    universal-authenticator-library "0.1.0"
+
 uglify-js@3.4.x:
   version "3.4.9"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.4.9.tgz#af02f180c1207d76432e473ed24a28f4a782bae3"
@@ -4908,6 +4898,11 @@ unique-string@^1.0.0:
   integrity sha1-nhBXzKhRq7kzmPizOuGHuZyuwRo=
   dependencies:
     crypto-random-string "^1.0.0"
+
+universal-authenticator-library@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/universal-authenticator-library/-/universal-authenticator-library-0.1.0.tgz#187e6a85f43e75d4d76b66c228c9e4b59770d4af"
+  integrity sha512-45nl80BWf+9WA8vTMXunMicZmHPm4wWdxNnSlL65cCP4OjA1ra4IuH+T7+Ko3P6IfXSfS9+VNCuXai3fip+taA==
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"
