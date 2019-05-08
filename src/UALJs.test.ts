@@ -225,7 +225,7 @@ const sleep = (time: number) => {
 const runPromises = async () => {
   // jest.useFakeTimers() changes the order in which promises are run
   // https://github.com/facebook/jest/pull/6876
-  // below is a workaround to ensure promises are run in their intended order
+  // the code below along with the global.Promise pollyfill are a workaround to ensure promises are run in their intended order
   Promise.resolve().then(() => jest.advanceTimersByTime(1))
   await sleep(1)
 }
