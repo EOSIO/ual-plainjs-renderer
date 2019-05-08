@@ -1,12 +1,13 @@
 import 'jest-localstorage-mock'
-import { User, Authenticator } from 'universal-authenticator-library'
+import promisePolyFill from 'promise'
+import { Authenticator, User } from 'universal-authenticator-library'
 import { UALJs } from './UALJs'
 
 import { AutologinAuthenticator } from './AuthMocks/AutologinAuthenticator'
 import { BaseMockAuthenticator } from './AuthMocks/BaseMockAuthenticator'
 
 jest.useFakeTimers()
-global.Promise = require('promise')
+global.Promise = promisePolyFill
 
 describe('Authenticators', () => {
   let containerElement: HTMLElement
@@ -66,10 +67,10 @@ describe('Authenticators', () => {
       authenticator.isLoading = jest.fn().mockReturnValue(true)
 
       ual = createNewUALJs(authenticator, containerElement)
-        
+
       ual.init()
       ual.loginUser(authenticator)
-      
+
       expect(authenticator.isLoading).toHaveBeenCalled()
       expect(authenticator.login).not.toHaveBeenCalled()
     })
@@ -87,7 +88,7 @@ describe('Authenticators', () => {
       expect(authenticator.login).not.toHaveBeenCalled()
 
       authenticator.isLoading = jest.fn().mockReturnValue(false)
-      
+
       jest.advanceTimersByTime(250)
       await promise
 
@@ -139,7 +140,7 @@ describe('Authenticators', () => {
 
       expect(authenticator.login).not.toHaveBeenCalled()
     })
-  
+
     it('logs in for non account name required', async () => {
       const thirtyDaysFromNow = new Date(new Date().getTime() + (30 * 24 * 60 * 60 * 1000))
 
@@ -161,7 +162,7 @@ describe('Authenticators', () => {
       localStorage.setItem('ual-session-expiration', `${thirtyDaysFromNow.getTime()}`)
       localStorage.setItem('ual-session-authenticator', authenticator.constructor.name)
       localStorage.setItem('ual-session-account-name', 'reqacctname')
-      
+
       ual.init()
       await runPromises()
 
@@ -171,7 +172,6 @@ describe('Authenticators', () => {
     it('are set on login when account name is not required', async () => {
       ual.init()
       await ual.loginUser(authenticator)
-
 
       expect(localStorage.getItem('ual-session-expiration')).not.toBeNull()
       expect(localStorage.getItem('ual-session-authenticator')).toEqual(authenticator.constructor.name)
@@ -219,13 +219,14 @@ describe('Authenticators', () => {
 })
 
 const sleep = (time: number) => {
-  return new Promise((resolve) => setTimeout(resolve, time));
+  return new Promise((resolve) => setTimeout(resolve, time))
 }
 
 const runPromises = async () => {
   // jest.useFakeTimers() changes the order in which promises are run
   // https://github.com/facebook/jest/pull/6876
-  // the code below along with the global.Promise pollyfill are a workaround to ensure promises are run in their intended order
+  // the code below along with the global.Promise pollyfill
+  // are workarounds to ensure promises are run in their intended order
   Promise.resolve().then(() => jest.advanceTimersByTime(1))
   await sleep(1)
 }
@@ -236,7 +237,8 @@ const createNewUALJs = (authenticator: Authenticator, containerElement: HTMLElem
     [],
     'my cool app',
     [authenticator],
-  {
-    containerElement
-  })
+    {
+      containerElement
+    }
+  )
 }
