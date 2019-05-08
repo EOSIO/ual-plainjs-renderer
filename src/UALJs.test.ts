@@ -7,6 +7,8 @@ import { AutologinAuthenticator } from './AuthMocks/AutologinAuthenticator'
 import { BaseMockAuthenticator } from './AuthMocks/BaseMockAuthenticator'
 
 jest.useFakeTimers()
+// Issue with promise run order when using useFakeTimers: https://github.com/facebook/jest/pull/6876
+// Workaround: https://github.com/facebook/jest/issues/7151
 global.Promise = promisePolyFill
 
 describe('Authenticators', () => {
@@ -216,15 +218,16 @@ const sleep = (time: number) => {
 
 const runPromises = async () => {
   // jest.useFakeTimers() changes the order in which promises are run
-  // https://github.com/facebook/jest/pull/6876
+  // Issue: https://github.com/facebook/jest/pull/6876
+  // Workaround: https://github.com/facebook/jest/issues/7151
   // the code below along with the global.Promise pollyfill
   // are workarounds to ensure promises are run in their intended order
   Promise.resolve().then(() => jest.advanceTimersByTime(1))
   await sleep(1)
 }
 
-const createNewUALJs = (authenticator: Authenticator, containerElement: HTMLElement) => {
-  return new UALJs(
+const createNewUALJs = (authenticator: Authenticator, containerElement: HTMLElement) => (
+  new UALJs(
     () => true,
     [],
     'my cool app',
@@ -233,4 +236,4 @@ const createNewUALJs = (authenticator: Authenticator, containerElement: HTMLElem
       containerElement
     }
   )
-}
+)

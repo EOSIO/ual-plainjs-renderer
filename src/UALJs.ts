@@ -131,7 +131,7 @@ export class UALJs extends UAL {
     localStorage.setItem(UALJs.SESSION_EXPIRATION_KEY, `${thirtyDaysFromNow.getTime()}`)
     localStorage.setItem(UALJs.SESSION_AUTHENTICATOR_KEY, authenticator.constructor.name)
 
-    await this.isAuthenticatorLoading(authenticator)
+    await this.waitForAuthenticatorToLoad(authenticator)
 
     if (accountName) {
       users = await authenticator.login(accountName)
@@ -150,7 +150,7 @@ export class UALJs extends UAL {
     }
   }
 
-  private async isAuthenticatorLoading(authenticator: Authenticator) {
+  private async waitForAuthenticatorToLoad(authenticator: Authenticator) {
     return new Promise((resolve) => {
       if (!authenticator.isLoading()) {
         resolve()
