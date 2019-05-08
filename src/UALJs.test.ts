@@ -126,14 +126,6 @@ describe('Authenticators', () => {
   })
 
   describe('session login', () => {
-    beforeEach(() => {
-      authenticator = new BaseMockAuthenticator([], null)
-      authenticator.login = login
-      authenticator.isLoading = isLoading
-
-      ual = createNewUALJs(authenticator, containerElement)
-    })
-
     it('does not login automatically when there is not a stored session state', async () => {
       ual.init()
       await runPromises()
