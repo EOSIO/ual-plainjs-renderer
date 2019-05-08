@@ -7,7 +7,8 @@ import { AutologinAuthenticator } from './AuthMocks/AutologinAuthenticator'
 import { BaseMockAuthenticator } from './AuthMocks/BaseMockAuthenticator'
 
 jest.useFakeTimers()
-// Issue with promise run order when using useFakeTimers: https://github.com/facebook/jest/pull/6876
+// jest.useFakeTimers() changes the order in which promises are run
+// Issue: https://github.com/facebook/jest/pull/6876
 // Workaround: https://github.com/facebook/jest/issues/7151
 global.Promise = promisePolyFill
 
