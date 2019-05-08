@@ -53,7 +53,6 @@ export class UALJs extends UAL {
     this.userCallbackHandler = userCallbackHandler
 
     this.loginUser = this.loginUser.bind(this)
-
   }
 
   /**
@@ -70,7 +69,6 @@ export class UALJs extends UAL {
       this.loginUser(authenticators.autoLoginAuthenticator)
       this.activeAuthenticator = authenticators.autoLoginAuthenticator
     } else {
-
       // check for existing session and resume if possible
       this.attemptSessionLogin(authenticators.availableAuthenticators)
 
@@ -111,14 +109,24 @@ export class UALJs extends UAL {
 
         const accountName = localStorage.getItem(UALJs.SESSION_ACCOUNT_NAME_KEY) || undefined
 
-        const authenticatorIsLoadingCheck = setInterval(() => {
-          if (!sessionAuthenticator.isLoading()) {
-            clearInterval(authenticatorIsLoadingCheck)
-            this.loginUser(sessionAuthenticator, accountName)
-          }
-        }, UALJs.AUTHENTICATOR_LOADING_INTERVAL)
+        this.loginUser(sessionAuthenticator, accountName)
       }
     }
+  }
+
+  private async isAuthenticatorLoading(authenticator: Authenticator) {
+    return new Promise((resolve) => {
+      if (!authenticator.isLoading()) {
+        resolve()
+        return
+      }
+      const authenticatorIsLoadingCheck = setInterval(() => {
+        if (!authenticator.isLoading()) {
+          clearInterval(authenticatorIsLoadingCheck)
+          resolve()
+        }
+      }, UALJs.AUTHENTICATOR_LOADING_INTERVAL)
+    })
   }
 
   /**
@@ -128,7 +136,7 @@ export class UALJs extends UAL {
    * @param authenticator Authenticator chosen for login
    * @param accountName Account name (optional) of the user logging in
    */
-  public async loginUser(authenticator: Authenticator, accountName ?: string) {
+  public async loginUser(authenticator: Authenticator, accountName?: string) {
     let users: User[]
 
     // set the active authenticator so we can use it in logout
@@ -138,6 +146,8 @@ export class UALJs extends UAL {
 
     localStorage.setItem(UALJs.SESSION_EXPIRATION_KEY, `${thirtyDaysFromNow.getTime()}`)
     localStorage.setItem(UALJs.SESSION_AUTHENTICATOR_KEY, authenticator.constructor.name)
+
+    await this.isAuthenticatorLoading(authenticator)
 
     if (accountName) {
       users = await authenticator.login(accountName)
