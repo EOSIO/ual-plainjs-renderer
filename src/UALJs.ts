@@ -20,6 +20,8 @@ export class UALJs extends UAL {
   protected static SESSION_AUTHENTICATOR_KEY = 'ual-session-authenticator'
   protected static SESSION_ACCOUNT_NAME_KEY = 'ual-session-account-name'
 
+  protected static AUTHENTICATOR_LOADING_INTERVAL = 250
+
   protected userCallbackHandler: (users: User[]) => any
   protected accountNameInputValue: string = ''
   protected dom?: UALJsDom
@@ -55,14 +57,14 @@ export class UALJs extends UAL {
   }
 
   /**
-   * Initializes UAL: If a renderConfig was provided and no autlogin authenticator
-   * is returned it will render the Auth Button and relevent DOM elements.
+   * Initializes UAL: If a renderConfig was provided and no autologin authenticator
+   * is returned it will render the Auth Button and relevant DOM elements.
    *
    */
   public init(): void {
     const authenticators = this.getAuthenticators()
 
-    // peform this check first, if we're autologging in we don't render a dom
+    // perform this check first, if we're autologging in we don't render a dom
     if (!!authenticators.autoLoginAuthenticator) {
       this.isAutologin = true
       this.loginUser(authenticators.autoLoginAuthenticator)
@@ -73,7 +75,7 @@ export class UALJs extends UAL {
       this.attemptSessionLogin(authenticators.availableAuthenticators)
 
       if (!this.renderConfig) {
-        throw new Error('Render Configuaration is required when no auto login authenticator is provided')
+        throw new Error('Render Configuration is required when no auto login authenticator is provided')
       }
 
       const {
@@ -108,7 +110,13 @@ export class UALJs extends UAL {
         ) as Authenticator
 
         const accountName = localStorage.getItem(UALJs.SESSION_ACCOUNT_NAME_KEY) || undefined
-        this.loginUser(sessionAuthenticator, accountName)
+
+        const authenticatorIsLoadingCheck = setInterval(() => {
+          if (!sessionAuthenticator.isLoading()) {
+            clearInterval(authenticatorIsLoadingCheck)
+            this.loginUser(sessionAuthenticator, accountName)
+          }
+        }, UALJs.AUTHENTICATOR_LOADING_INTERVAL)
       }
     }
   }
