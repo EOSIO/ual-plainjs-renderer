@@ -108,7 +108,6 @@ export class UALJs extends UAL {
         ) as Authenticator
 
         const accountName = localStorage.getItem(UALJs.SESSION_ACCOUNT_NAME_KEY) || undefined
-
         this.loginUser(sessionAuthenticator, accountName)
       }
     }

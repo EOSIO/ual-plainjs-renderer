@@ -135,7 +135,7 @@ describe('Authenticators', () => {
 
     it('does not login automatically when there is not a stored session state', async () => {
       ual.init()
-      await waitForPromises()
+      await runPromises()
 
       expect(authenticator.login).not.toHaveBeenCalled()
     })
@@ -147,7 +147,7 @@ describe('Authenticators', () => {
       localStorage.setItem('ual-session-authenticator', authenticator.constructor.name)
 
       ual.init()
-      await waitForPromises()
+      await runPromises()
 
       expect(authenticator.login).toHaveBeenCalled()
     })
@@ -163,7 +163,7 @@ describe('Authenticators', () => {
       localStorage.setItem('ual-session-account-name', 'reqacctname')
       
       ual.init()
-      await waitForPromises()
+      await runPromises()
 
       expect(authenticator.login).toHaveBeenCalledWith('reqacctname')
     })
@@ -199,7 +199,7 @@ describe('Authenticators', () => {
       ual = createNewUALJs(authenticator, containerElement)
 
       ual.init()
-      await waitForPromises()
+      await runPromises()
 
       expect(authenticator.login).toBeCalledTimes(1)
     })
@@ -211,7 +211,7 @@ describe('Authenticators', () => {
       ual = createNewUALJs(authenticator, containerElement)
 
       ual.init()
-      await waitForPromises()
+      await runPromises()
 
       expect(authenticator.login).not.toBeCalled()
     })
@@ -222,8 +222,10 @@ const sleep = (time: number) => {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-const waitForPromises = async () => {
-  // this ensures promises are awaited which currently do not due to the use of jestFakeTimers
+const runPromises = async () => {
+  // jest.useFakeTimers() changes the order in which promises are run
+  // https://github.com/facebook/jest/pull/6876
+  // below is a workaround to ensure promises are run in their intended order
   Promise.resolve().then(() => jest.advanceTimersByTime(1))
   await sleep(1)
 }
