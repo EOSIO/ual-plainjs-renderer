@@ -1,5 +1,4 @@
 import 'jest-localstorage-mock'
-import wait from 'waait'
 import { User, Authenticator } from 'universal-authenticator-library'
 import { UALJs } from './UALJs'
 
@@ -210,7 +209,7 @@ describe('Authenticators', () => {
       authenticator.login = login
 
       ual = createNewUALJs(authenticator, containerElement)
-      
+
       ual.init()
       await waitForPromises()
 
@@ -219,10 +218,14 @@ describe('Authenticators', () => {
   })
 })
 
+const sleep = (time: number) => {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 const waitForPromises = async () => {
   // this ensures promises are awaited which currently do not due to the use of jestFakeTimers
   Promise.resolve().then(() => jest.advanceTimersByTime(1))
-  await wait(1)
+  await sleep(1)
 }
 
 const createNewUALJs = (authenticator: Authenticator, containerElement: HTMLElement) => {
