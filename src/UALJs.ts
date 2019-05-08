@@ -113,21 +113,6 @@ export class UALJs extends UAL {
     }
   }
 
-  private async isAuthenticatorLoading(authenticator: Authenticator) {
-    return new Promise((resolve) => {
-      if (!authenticator.isLoading()) {
-        resolve()
-        return
-      }
-      const authenticatorIsLoadingCheck = setInterval(() => {
-        if (!authenticator.isLoading()) {
-          clearInterval(authenticatorIsLoadingCheck)
-          resolve()
-        }
-      }, UALJs.AUTHENTICATOR_LOADING_INTERVAL)
-    })
-  }
-
   /**
    * App developer can call this directly with the preferred authenticator or render a
    * UI to let the user select their authenticator
@@ -163,6 +148,21 @@ export class UALJs extends UAL {
     if (!this.isAutologin) {
       this.dom!.reset()
     }
+  }
+
+  private async isAuthenticatorLoading(authenticator: Authenticator) {
+    return new Promise((resolve) => {
+      if (!authenticator.isLoading()) {
+        resolve()
+        return
+      }
+      const authenticatorIsLoadingCheck = setInterval(() => {
+        if (!authenticator.isLoading()) {
+          clearInterval(authenticatorIsLoadingCheck)
+          resolve()
+        }
+      }, UALJs.AUTHENTICATOR_LOADING_INTERVAL)
+    })
   }
 
   /**
