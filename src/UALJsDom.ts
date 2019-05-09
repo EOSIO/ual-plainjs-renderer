@@ -199,7 +199,7 @@ export class UALJsDom {
   }
 
   /**
-   * Genarates unique string for comparing authenticator states
+   * Generates unique string for comparing authenticator states
    */
   private getAuthenticatorsStateString(): string {
 
@@ -439,7 +439,7 @@ export class UALJsDom {
   }
 
   /**
-   * Handles the click action of Autenticator buttons
+   * Handles the click action of Authenticator buttons
    *
    * @param authenticators Authenticators
    */

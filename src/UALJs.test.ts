@@ -1,23 +1,40 @@
 import 'jest-localstorage-mock'
-import { User } from 'universal-authenticator-library'
+import promisePolyFill from 'promise'
+import { Authenticator, User } from 'universal-authenticator-library'
 import { UALJs } from './UALJs'
 
 import { AutologinAuthenticator } from './AuthMocks/AutologinAuthenticator'
 import { BaseMockAuthenticator } from './AuthMocks/BaseMockAuthenticator'
 
+jest.useFakeTimers()
+// jest.useFakeTimers() changes the order in which promises are run
+// Issue: https://github.com/facebook/jest/pull/6876
+// Workaround: https://github.com/facebook/jest/issues/7151
+global.Promise = promisePolyFill
+
 describe('Authenticators', () => {
-  let containerElement
-  let authenticatorLoginMock
+  let containerElement: HTMLElement
+  let ual: UALJs
+  let authenticator: Authenticator
+  let login: jest.Mock
+  let isLoading: jest.Mock
 
   beforeEach(() => {
     localStorage.clear()
-    authenticatorLoginMock = jest.fn().mockResolvedValue([{}] as User[])
+
+    authenticator = new BaseMockAuthenticator([], null)
+    login = jest.fn().mockResolvedValue([{}] as User[])
+    isLoading = jest.fn().mockReturnValue(false)
+    authenticator.login = login
+    authenticator.isLoading = isLoading
 
     document.body.innerHTML = `
       <div id="buttonContainer"></div>
     `
 
     containerElement = document.getElementById('buttonContainer')!
+
+    ual = createNewUALJs(authenticator, containerElement)
   })
 
   afterEach(() => {
@@ -26,15 +43,15 @@ describe('Authenticators', () => {
     document.body.innerHTML = ``
   })
 
-  it('throw error when no autlogin authenticators are provided', () => {
+  it('throw error when no autologin authenticators are provided', () => {
     let errorThrown = true
 
     try {
-      const ual = new UALJs((users) => { console.info('users', users) }, [], 'my cool app', [])
+      ual = new UALJs((users) => { console.info('users', users) }, [], 'my cool app', [])
       ual.init()
       errorThrown = false
     } catch (e) {
-      expect(e.message).toBe('Render Configuaration is required when no auto login authenticator is provided')
+      expect(e.message).toBe('Render Configuration is required when no auto login authenticator is provided')
       errorThrown = true
     }
 
@@ -42,41 +59,51 @@ describe('Authenticators', () => {
   })
 
   describe('login', () => {
-    it('calls login with provided authenticator', () => {
-      const authenticator = new BaseMockAuthenticator([], null)
-      authenticator.login = authenticatorLoginMock
-
-      const ual = new UALJs(
-        () => true,
-        [],
-        'my cool app',
-        [authenticator],
-        {
-          containerElement
-        }
-      )
+    it('calls login with provided authenticator', async () => {
       ual.init()
+      await ual.loginUser(authenticator)
 
+      expect(authenticator.login).toBeCalledTimes(1)
+    })
+
+    it('does not login if authenticator is still loading', () => {
+      authenticator.isLoading = jest.fn().mockReturnValue(true)
+
+      ual = createNewUALJs(authenticator, containerElement)
+
+      ual.init()
       ual.loginUser(authenticator)
 
-      expect(authenticatorLoginMock).toBeCalledTimes(1)
+      expect(authenticator.isLoading).toHaveBeenCalled()
+      expect(authenticator.login).not.toHaveBeenCalled()
+    })
+
+    it('eventually logs in once authenticator is no longer loading', async () => {
+      authenticator.isLoading = jest.fn().mockReturnValue(true)
+
+      ual = createNewUALJs(authenticator, containerElement)
+
+      ual.init()
+      const promise = ual.loginUser(authenticator)
+      jest.advanceTimersByTime(250)
+
+      expect(authenticator.isLoading).toHaveBeenCalled()
+      expect(authenticator.login).not.toHaveBeenCalled()
+
+      authenticator.isLoading = jest.fn().mockReturnValue(false)
+
+      jest.advanceTimersByTime(250)
+      await promise
+
+      expect(authenticator.login).toHaveBeenCalled()
     })
   })
 
   describe('logout', () => {
     it('clears session keys', async () => {
-      const authenticator = new BaseMockAuthenticator([], null)
-      authenticator.login = authenticatorLoginMock
       authenticator.shouldRequestAccountName = jest.fn().mockResolvedValue(true)
-      const ual = new UALJs(
-          () => true,
-          [],
-          'my cool app',
-          [authenticator],
-        {
-          containerElement
-        }
-      )
+
+      ual = createNewUALJs(authenticator, containerElement)
 
       ual.init()
       await ual.loginUser(authenticator, 'mycoolUser')
@@ -88,18 +115,10 @@ describe('Authenticators', () => {
     })
 
     it('calls logout on the authenticator provided', async () => {
-      const authenticator = new BaseMockAuthenticator([], null)
+      authenticator = new BaseMockAuthenticator([], null)
       authenticator.logout = jest.fn().mockResolvedValue(true)
 
-      const ual = new UALJs(
-          () => true,
-          [],
-          'my cool app',
-          [authenticator],
-        {
-          containerElement
-        }
-      )
+      ual = createNewUALJs(authenticator, containerElement)
 
       ual.init()
       await ual.loginUser(authenticator, 'mycoolUser')
@@ -110,73 +129,56 @@ describe('Authenticators', () => {
   })
 
   describe('session login', () => {
-    let ualInstance
-    let authenticator
+    it('does not login automatically when there is not a stored session state', async () => {
+      ual.init()
+      await runPromises()
 
-    beforeEach(() => {
-      authenticator = new BaseMockAuthenticator([], null)
-      authenticator.login = authenticatorLoginMock
-
-      ualInstance = new UALJs(
-        () => true,
-        [],
-        'my cool app',
-        [authenticator],
-        {
-          containerElement
-        }
-      )
+      expect(authenticator.login).not.toHaveBeenCalled()
     })
 
-    it('does not login automatically when there is not a stored session state', () => {
-      ualInstance.init()
-      expect(authenticatorLoginMock).not.toHaveBeenCalled()
-    })
-
-    it('logs in for non account name required when there is a stored session state', () => {
+    it('logs in for non account name required', async () => {
       const thirtyDaysFromNow = new Date(new Date().getTime() + (30 * 24 * 60 * 60 * 1000))
 
       localStorage.setItem('ual-session-expiration', `${thirtyDaysFromNow.getTime()}`)
       localStorage.setItem('ual-session-authenticator', authenticator.constructor.name)
 
-      ualInstance.init()
-      expect(authenticatorLoginMock).toHaveBeenCalled()
+      ual.init()
+      await runPromises()
+
+      expect(authenticator.login).toHaveBeenCalled()
     })
 
-    it('logs in for account name required when there is a stored session state', () => {
-      const thirtyDaysFromNow = new Date(new Date().getTime() + (30 * 24 * 60 * 60 * 1000))
+    it('logs in for account name required', async () => {
       authenticator.shouldRequestAccountName = jest.fn().mockResolvedValue(true)
 
+      ual = createNewUALJs(authenticator, containerElement)
+
+      const thirtyDaysFromNow = new Date(new Date().getTime() + (30 * 24 * 60 * 60 * 1000))
       localStorage.setItem('ual-session-expiration', `${thirtyDaysFromNow.getTime()}`)
       localStorage.setItem('ual-session-authenticator', authenticator.constructor.name)
       localStorage.setItem('ual-session-account-name', 'reqacctname')
 
-      ualInstance.init()
-      expect(authenticatorLoginMock).toHaveBeenCalledWith('reqacctname')
+      ual.init()
+      await runPromises()
+
+      expect(authenticator.login).toHaveBeenCalledWith('reqacctname')
     })
 
-    it(`are set on login when account name is not required`, async () => {
-      ualInstance.init()
-      await ualInstance.loginUser(authenticator)
+    it('are set on login when account name is not required', async () => {
+      ual.init()
+      await ual.loginUser(authenticator)
 
       expect(localStorage.getItem('ual-session-expiration')).not.toBeNull()
       expect(localStorage.getItem('ual-session-authenticator')).toEqual(authenticator.constructor.name)
     })
 
-    it(`are set on login when account name is required`, async () => {
+    it('are set on login when account name is required', async () => {
       authenticator.shouldRequestAccountName = jest.fn().mockResolvedValue(true)
-      ualInstance = new UALJs(
-          () => true,
-          [],
-          'my cool app',
-          [authenticator],
-        {
-          containerElement
-        }
-        )
 
-      ualInstance.init()
-      await ualInstance.loginUser(authenticator, 'mycoolUser')
+      ual = createNewUALJs(authenticator, containerElement)
+
+      ual.init()
+      await ual.loginUser(authenticator, 'mycoolUser')
 
       expect(localStorage.getItem('ual-session-expiration')).not.toBeNull()
       expect(localStorage.getItem('ual-session-authenticator')).toEqual(authenticator.constructor.name)
@@ -185,37 +187,54 @@ describe('Authenticators', () => {
   })
 
   describe('autologin', () => {
-    it('logs in when an autologin authenticator is provided', () => {
-      const authenticator = new AutologinAuthenticator([], null)
-      authenticator.login = authenticatorLoginMock
+    it('logs in when an autologin authenticator is provided', async () => {
+      authenticator = new AutologinAuthenticator([], null)
+      authenticator.login = login
 
-      const ual = new UALJs(
-        () => true,
-        [],
-        'my cool app',
-        [authenticator]
-      )
+      ual = createNewUALJs(authenticator, containerElement)
+
       ual.init()
+      await runPromises()
 
-      expect(authenticatorLoginMock).toBeCalledTimes(1)
+      expect(authenticator.login).toBeCalledTimes(1)
     })
 
-    it('does not log in when an autologin authenticator is not provided', () => {
-      const authenticator = new BaseMockAuthenticator([], null)
-      authenticator.login = authenticatorLoginMock
+    it('does not log in when an autologin authenticator is not provided', async () => {
+      authenticator = new BaseMockAuthenticator([], null)
+      authenticator.login = login
 
-      const ual = new UALJs(
-        () => true,
-        [],
-        'my cool app',
-        [authenticator],
-        {
-          containerElement
-        }
-      )
+      ual = createNewUALJs(authenticator, containerElement)
+
       ual.init()
+      await runPromises()
 
-      expect(authenticatorLoginMock).not.toBeCalled()
+      expect(authenticator.login).not.toBeCalled()
     })
   })
 })
+
+const sleep = (time: number) => {
+  return new Promise((resolve) => setTimeout(resolve, time))
+}
+
+const runPromises = async () => {
+  // jest.useFakeTimers() changes the order in which promises are run
+  // Issue: https://github.com/facebook/jest/pull/6876
+  // Workaround: https://github.com/facebook/jest/issues/7151
+  // the code below along with the global.Promise pollyfill
+  // are workarounds to ensure promises are run in their intended order
+  Promise.resolve().then(() => jest.advanceTimersByTime(1))
+  await sleep(1)
+}
+
+const createNewUALJs = (authenticator: Authenticator, containerElement: HTMLElement) => (
+  new UALJs(
+    () => true,
+    [],
+    'my cool app',
+    [authenticator],
+    {
+      containerElement
+    }
+  )
+)
