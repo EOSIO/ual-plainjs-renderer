@@ -20,6 +20,8 @@ export class UALJs extends UAL {
   protected static SESSION_AUTHENTICATOR_KEY = 'ual-session-authenticator'
   protected static SESSION_ACCOUNT_NAME_KEY = 'ual-session-account-name'
 
+  protected static AUTHENTICATOR_LOADING_INTERVAL = 250
+
   protected userCallbackHandler: (users: User[]) => any
   protected accountNameInputValue: string = ''
   protected dom?: UALJsDom
@@ -51,29 +53,27 @@ export class UALJs extends UAL {
     this.userCallbackHandler = userCallbackHandler
 
     this.loginUser = this.loginUser.bind(this)
-
   }
 
   /**
-   * Initializes UAL: If a renderConfig was provided and no autlogin authenticator
-   * is returned it will render the Auth Button and relevent DOM elements.
+   * Initializes UAL: If a renderConfig was provided and no autologin authenticator
+   * is returned it will render the Auth Button and relevant DOM elements.
    *
    */
   public init(): void {
     const authenticators = this.getAuthenticators()
 
-    // peform this check first, if we're autologging in we don't render a dom
+    // perform this check first, if we're autologging in we don't render a dom
     if (!!authenticators.autoLoginAuthenticator) {
       this.isAutologin = true
       this.loginUser(authenticators.autoLoginAuthenticator)
       this.activeAuthenticator = authenticators.autoLoginAuthenticator
     } else {
-
       // check for existing session and resume if possible
       this.attemptSessionLogin(authenticators.availableAuthenticators)
 
       if (!this.renderConfig) {
-        throw new Error('Render Configuaration is required when no auto login authenticator is provided')
+        throw new Error('Render Configuration is required when no auto login authenticator is provided')
       }
 
       const {
@@ -120,7 +120,7 @@ export class UALJs extends UAL {
    * @param authenticator Authenticator chosen for login
    * @param accountName Account name (optional) of the user logging in
    */
-  public async loginUser(authenticator: Authenticator, accountName ?: string) {
+  public async loginUser(authenticator: Authenticator, accountName?: string) {
     let users: User[]
 
     // set the active authenticator so we can use it in logout
@@ -130,6 +130,8 @@ export class UALJs extends UAL {
 
     localStorage.setItem(UALJs.SESSION_EXPIRATION_KEY, `${thirtyDaysFromNow.getTime()}`)
     localStorage.setItem(UALJs.SESSION_AUTHENTICATOR_KEY, authenticator.constructor.name)
+
+    await this.waitForAuthenticatorToLoad(authenticator)
 
     if (accountName) {
       users = await authenticator.login(accountName)
@@ -146,6 +148,21 @@ export class UALJs extends UAL {
     if (!this.isAutologin) {
       this.dom!.reset()
     }
+  }
+
+  private async waitForAuthenticatorToLoad(authenticator: Authenticator) {
+    return new Promise((resolve) => {
+      if (!authenticator.isLoading()) {
+        resolve()
+        return
+      }
+      const authenticatorIsLoadingCheck = setInterval(() => {
+        if (!authenticator.isLoading()) {
+          clearInterval(authenticatorIsLoadingCheck)
+          resolve()
+        }
+      }, UALJs.AUTHENTICATOR_LOADING_INTERVAL)
+    })
   }
 
   /**
