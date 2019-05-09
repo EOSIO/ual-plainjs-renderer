@@ -92,7 +92,7 @@ async function updateBalance() {
   const balanceTag = document.getElementById('p-transfer')
 
   try {
-    const rpc = new JsonRpc(`${EXAMPLE_ENV.RPC_PROTOCOL}://${EXAMPLE_ENV.RPC_HOST}`)
+    const rpc = new JsonRpc(`${EXAMPLE_ENV.RPC_PROTOCOL}://${EXAMPLE_ENV.RPC_HOST}:${EXAMPLE_ENV.RPC_PORT}`)
     const accountName = await loggedInUser.getAccountName()
     const data = await rpc.get_account(accountName)
 
