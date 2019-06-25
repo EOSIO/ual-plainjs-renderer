@@ -98,7 +98,7 @@ describe('Authenticators', () => {
       expect(authenticator.login).toHaveBeenCalled()
     })
 
-    describe('error is thrown', () => {
+    describe('error is thrown by authenticator', () => {
       const loginError = new Error('Login Error')
 
       beforeEach(() => {
