@@ -144,7 +144,7 @@ export class UALJs extends UAL {
 
       // send our users back
       this.userCallbackHandler(users)
-      
+
     } catch (e) {
       console.error('Error', e)
       console.error('Error cause', e.cause ? e.cause : '')
