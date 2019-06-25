@@ -149,7 +149,7 @@ export class UALJs extends UAL {
       console.error('Error', e)
       console.error('Error cause', e.cause ? e.cause : '')
       this.clearStorageKeys()
-      throw new Error(e)
+      throw e
     }
 
     // reset our modal state if we're not autologged in (no dom is rendered for autologin)
