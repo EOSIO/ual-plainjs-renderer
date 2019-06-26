@@ -97,6 +97,41 @@ describe('Authenticators', () => {
 
       expect(authenticator.login).toHaveBeenCalled()
     })
+
+    describe('error is thrown by authenticator', () => {
+      const loginError = new Error('Login Error')
+
+      beforeEach(() => {
+        authenticator.login = jest.fn().mockImplementation(() => { throw loginError })
+      })
+
+      it('throws original caught error', async () => {
+        let didThrow = true
+
+        try {
+          ual.init()
+          await ual.loginUser(authenticator)
+          didThrow = false
+        } catch (error) {
+          expect(error).toEqual(loginError)
+        }
+
+        expect(didThrow).toBe(true)
+      })
+
+      it('clears session keys', async () => {
+        try {
+          ual.init()
+          await ual.loginUser(authenticator)
+        } catch (error) {
+          expect(error).toEqual(loginError)
+        }
+
+        expect(localStorage.getItem('ual-session-expiration')).toBeNull()
+        expect(localStorage.getItem('ual-session-authenticator')).toBeNull()
+        expect(localStorage.getItem('ual-session-account-name')).toBeNull()
+      })
+    })
   })
 
   describe('logout', () => {

@@ -131,18 +131,26 @@ export class UALJs extends UAL {
     localStorage.setItem(UALJs.SESSION_EXPIRATION_KEY, `${thirtyDaysFromNow.getTime()}`)
     localStorage.setItem(UALJs.SESSION_AUTHENTICATOR_KEY, authenticator.constructor.name)
 
-    await this.waitForAuthenticatorToLoad(authenticator)
+    try {
+      await this.waitForAuthenticatorToLoad(authenticator)
 
-    if (accountName) {
-      users = await authenticator.login(accountName)
+      if (accountName) {
+        users = await authenticator.login(accountName)
 
-      localStorage.setItem(UALJs.SESSION_ACCOUNT_NAME_KEY, accountName)
-    } else {
-      users = await authenticator.login()
+        localStorage.setItem(UALJs.SESSION_ACCOUNT_NAME_KEY, accountName)
+      } else {
+        users = await authenticator.login()
+      }
+
+      // send our users back
+      this.userCallbackHandler(users)
+
+    } catch (e) {
+      console.error('Error', e)
+      console.error('Error cause', e.cause ? e.cause : '')
+      this.clearStorageKeys()
+      throw e
     }
-
-    // send our users back
-    this.userCallbackHandler(users)
 
     // reset our modal state if we're not autologged in (no dom is rendered for autologin)
     if (!this.isAutologin) {
@@ -175,6 +183,10 @@ export class UALJs extends UAL {
 
     this.activeAuthenticator.logout()
 
+    this.clearStorageKeys()
+  }
+
+  private clearStorageKeys() {
     // clear out our storage keys
     localStorage.removeItem(UALJs.SESSION_EXPIRATION_KEY)
     localStorage.removeItem(UALJs.SESSION_AUTHENTICATOR_KEY)
