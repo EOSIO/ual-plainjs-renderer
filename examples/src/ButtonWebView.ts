@@ -1,7 +1,7 @@
+import { JsonRpc } from 'eosjs'
+import { UALJs } from 'ual-plainjs-renderer'
 import { Scatter } from 'ual-scatter'
 import { User } from 'universal-authenticator-library'
-import { UALJs } from 'ual-plainjs-renderer'
-import { JsonRpc } from 'eosjs'
 import { MockAuthenticator } from './AuthMocks'
 import demoTransaction from './demo-transaction'
 
@@ -45,7 +45,7 @@ const ual = new UALJs(
   [exampleNet],
   'UAL Test',
   [
-    new Scatter([exampleNet], {appName: 'UAL Example'}),
+    new Scatter([exampleNet], { appName: 'UAL Example' }),
     new MockAuthenticator([exampleNet]),
   ],
   {
