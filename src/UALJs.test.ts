@@ -16,8 +16,8 @@ describe('Authenticators', () => {
   let containerElement: HTMLElement
   let ual: UALJs
   let authenticator: Authenticator
-  let login: jest.Mock
-  let isLoading: jest.Mock
+  let login
+  let isLoading
 
   beforeEach(() => {
     localStorage.clear()
