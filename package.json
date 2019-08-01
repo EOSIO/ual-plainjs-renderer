@@ -3,7 +3,7 @@
   "version": "0.1.4",
   "author": {
     "name": "block.one",
-    "url": "git@github.com:EOSIO/ual-plainjs-renderer.git"
+    "url": "https://block.one/"
   },
   "collaborators": [
     "Chris Allnutt"
