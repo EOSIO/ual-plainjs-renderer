@@ -32,7 +32,7 @@ export class AuthButton extends UALJsAbstractBaseComponent {
       }
 
       .ual-auth-icon {
-        max-height: 30px;
+        max-height: 40px;
         max-width: 100%;
         margin: auto;
         margin-top: 7%;
@@ -44,7 +44,7 @@ export class AuthButton extends UALJsAbstractBaseComponent {
         display: inline-block;
         float: left;
         width: 50px;
-        padding: 4px 10px 10px 10px;
+        padding: 4px 10px 8px 10px;
         background-color: rgba(0,0,0,0.15);
         border-radius: 5px 0px 0px 5px;
       }
@@ -155,7 +155,7 @@ export class AuthButton extends UALJsAbstractBaseComponent {
       }
 
       errorMessageTooltip = authenticator.isErrored() ?
-      `data-tippy-content="${authenticator.getError()!.message}"` : ''
+        `data-tippy-content="${authenticator.getError()!.message}"` : ''
 
       toolTipClass = authenticator.isErrored() ? 'tippy-binding' : ''
 
