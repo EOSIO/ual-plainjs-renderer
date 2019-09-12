@@ -1,12 +1,13 @@
 {
   "name": "ual-plainjs-renderer",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "author": {
     "name": "block.one",
     "url": "https://block.one/"
   },
   "collaborators": [
-    "Chris Allnutt"
+    "Chris Allnutt",
+    "Mike Manfredi"
   ],
   "repository": {
     "type": "git",
@@ -22,7 +23,7 @@
     "prepare": "yarn build"
   },
   "dependencies": {
-    "universal-authenticator-library": "^0.1.2"
+    "universal-authenticator-library": "0.1.4"
   },
   "devDependencies": {
     "@blockone/tslint-config-blockone": "1.0.0",
