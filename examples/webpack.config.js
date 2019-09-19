@@ -6,6 +6,7 @@ const dotenv = require('dotenv').config()
 module.exports = {
   mode: "development",
   entry: [
+    "@babel/polyfill",
     "./dist/examples/src/ButtonWebView.js",
   ],
   output: {
