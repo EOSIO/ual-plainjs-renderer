@@ -7,7 +7,8 @@
     "url": "https://block.one/"
   },
   "contributors": [
-    "Chris Allnutt"
+    "Chris Allnutt",
+    "Mike Manfredi"
   ],
   "license": "MIT",
   "scripts": {
@@ -20,7 +21,6 @@
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
     "@babel/node": "^7.6.0",
-    "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "@blockone/tslint-config-blockone": "1.0.0",
     "babel-loader": "^7.1.5",
