@@ -1,4 +1,5 @@
 import { JsonRpc } from 'eosjs'
+import { Ledger } from 'ual-ledger'
 import { UALJs } from 'ual-plainjs-renderer'
 import { Scatter } from 'ual-scatter'
 import { User } from 'universal-authenticator-library'
@@ -46,6 +47,7 @@ const ual = new UALJs(
   'UAL Test',
   [
     new Scatter([exampleNet], { appName: 'UAL Example' }),
+    new Ledger([exampleNet]),
     new MockAuthenticator([exampleNet]),
   ],
   {
