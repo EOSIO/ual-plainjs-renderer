@@ -15,7 +15,6 @@ export interface UALJsRenderConfig {
 export class UALJs extends UAL {
   public isAutologin: boolean = false
 
-  protected static SESSION_EXPIRATION = 30 // session expiration in days
   protected static SESSION_EXPIRATION_KEY = 'ual-session-expiration'
   protected static SESSION_AUTHENTICATOR_KEY = 'ual-session-authenticator'
   protected static SESSION_ACCOUNT_NAME_KEY = 'ual-session-account-name'
@@ -99,7 +98,7 @@ export class UALJs extends UAL {
     const sessionExpiration = localStorage.getItem(UALJs.SESSION_EXPIRATION_KEY) || null
     if (sessionExpiration) {
       // clear session if it has expired and continue
-      if (Number(sessionExpiration) < new Date().getTime()) {
+      if (new Date(sessionExpiration) <= new Date()) {
         localStorage.clear()
       } else {
         const authenticatorName = localStorage.getItem(UALJs.SESSION_AUTHENTICATOR_KEY)
@@ -126,9 +125,11 @@ export class UALJs extends UAL {
     // set the active authenticator so we can use it in logout
     this.activeAuthenticator = authenticator
 
-    const thirtyDaysFromNow = new Date(new Date().getTime() + (UALJs.SESSION_EXPIRATION * 24 * 60 * 60 * 1000))
+    const invalidateSeconds = this.activeAuthenticator.shouldInvalidateAfter()
+    const invalidateAt = new Date()
+    invalidateAt.setSeconds(invalidateAt.getSeconds() + invalidateSeconds)
 
-    localStorage.setItem(UALJs.SESSION_EXPIRATION_KEY, `${thirtyDaysFromNow.getTime()}`)
+    localStorage.setItem(UALJs.SESSION_EXPIRATION_KEY, invalidateAt.toString())
     localStorage.setItem(UALJs.SESSION_AUTHENTICATOR_KEY, authenticator.constructor.name)
 
     try {
