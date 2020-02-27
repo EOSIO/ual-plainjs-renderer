@@ -279,7 +279,14 @@ describe('Authenticators', () => {
 
     it('invalidates on the second of ual-session-expiration instead of after', async () => {
       const mockDate = new Date('2099-01-01T00:00:00')
-      jest.spyOn(global, 'Date').mockImplementationOnce(() => mockDate)
+      const realDate = Date
+      // @ts-ignore
+      global.Date = class extends Date {
+        constructor(date) {
+          if (date) { super(date) }
+          return mockDate
+        }
+      }
 
       localStorage.setItem('ual-session-expiration', mockDate.toString())
       localStorage.setItem('ual-session-authenticator', authenticator.constructor.name)
@@ -288,6 +295,8 @@ describe('Authenticators', () => {
       await runPromises()
 
       expect(authenticator.login).not.toHaveBeenCalled()
+
+      global.Date = realDate
     })
   })
 })
