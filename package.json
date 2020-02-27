@@ -1,6 +1,6 @@
 {
   "name": "ual-plainjs-renderer",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "author": {
     "name": "block.one",
     "url": "https://block.one/"
@@ -23,7 +23,7 @@
     "prepare": "yarn build"
   },
   "dependencies": {
-    "universal-authenticator-library": "0.1.4"
+    "universal-authenticator-library": "0.2.0"
   },
   "devDependencies": {
     "@blockone/tslint-config-blockone": "1.0.0",
