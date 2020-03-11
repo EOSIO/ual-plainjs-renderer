@@ -23,19 +23,19 @@
     "prepare": "yarn build"
   },
   "dependencies": {
-    "universal-authenticator-library": "0.1.4"
+    "universal-authenticator-library": "0.2.0"
   },
   "devDependencies": {
     "@blockone/tslint-config-blockone": "1.0.0",
-    "@types/jest": "24.0.15",
-    "@types/jsdom": "^12.2.1",
-    "jest": "^24.9.0",
+    "@types/jest": "^25.1.4",
+    "@types/jsdom": "^16.1.0",
+    "jest": "^25.1.0",
     "jest-localstorage-mock": "^2.4.0",
-    "jsdom": "^14.0.2",
-    "promise": "^8.0.3",
-    "ts-jest": "^24.0.2",
+    "jsdom": "^16.2.1",
+    "promise": "^8.1.0",
+    "ts-jest": "^25.2.1",
     "tslint": "^5.11.0",
-    "typescript": "^3.2.2"
+    "typescript": "^3.8.3"
   },
   "jest": {
     "setupFiles": [
