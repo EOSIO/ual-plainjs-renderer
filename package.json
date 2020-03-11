@@ -16,8 +16,7 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf dist",
-    "build": "yarn clean && tsc --build tsconfig.json",
+    "build": "rm -rf dist && tsc --build tsconfig.json",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "test": "jest",
     "prepare": "yarn build"

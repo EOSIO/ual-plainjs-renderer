@@ -12,8 +12,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "clean": "rm -rf dist",
-    "build": "yarn clean && tsc --build tsconfig.json",
+    "build": "rm -rf dist && tsc --build tsconfig.json",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "example": "yarn build && mkdir dist/public && webpack --config webpack.config.js && nodemon server --exec babel-node -e js"
   },
