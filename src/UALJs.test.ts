@@ -11,7 +11,7 @@ jest.useFakeTimers()
 // jest.useFakeTimers() changes the order in which promises are run
 // Issue: https://github.com/facebook/jest/pull/6876
 // Workaround: https://github.com/facebook/jest/issues/7151
-global.Promise = <any>promisePolyFill
+global.Promise = promisePolyFill as any
 
 describe('Authenticators', () => {
   let containerElement: HTMLElement
