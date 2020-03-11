@@ -24,7 +24,7 @@ describe('Message Modal', () => {
         type: MessageTypes.ERROR
       })
 
-      const messageContentDiv = modalInstance.getComponentElement().querySelector(`#ual-modal-message`)
+      const messageContentDiv = modalInstance.getComponentElement().querySelector('#ual-modal-message')
 
       expect(messageContentDiv.style.color).toEqual('red')
     })
@@ -36,7 +36,7 @@ describe('Message Modal', () => {
         type: MessageTypes.SUCCESS
       })
 
-      const messageContentDiv = modalInstance.getComponentElement().querySelector(`#ual-modal-message`)
+      const messageContentDiv = modalInstance.getComponentElement().querySelector('#ual-modal-message')
 
       expect(messageContentDiv.style.color).toEqual('green')
     })
@@ -47,7 +47,7 @@ describe('Message Modal', () => {
         message: 'Modal Success Content'
       })
 
-      const messageContentDiv = modalInstance.getComponentElement().querySelector(`#ual-modal-message`)
+      const messageContentDiv = modalInstance.getComponentElement().querySelector('#ual-modal-message')
 
       expect(messageContentDiv.style.color).toEqual('black')
     })
@@ -78,7 +78,7 @@ describe('Message Modal', () => {
       expect(onCloseStub).toBeCalledTimes(1)
     })
 
-    it(`doesn't call onClose when the modal is already closed`, () => {
+    it('doesn\'t call onClose when the modal is already closed', () => {
       modalInstance.close()
       onCloseStub.mockReset()
 

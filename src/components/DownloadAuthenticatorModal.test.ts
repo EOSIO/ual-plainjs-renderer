@@ -40,24 +40,24 @@ describe('Download Authenticator Modal', () => {
 
   describe('authenticator specific text', () => {
     it('Has Empty Title Text when rendered', () => {
-      expect(component.getComponentElement().innerHTML).toContain(`<p class="ual-modal-content-description"></p>`)
+      expect(component.getComponentElement().innerHTML).toContain('<p class="ual-modal-content-description"></p>')
     })
 
     it('Has Button Title Text when opened with authenticator', () => {
       component.open(baseAuthenticator)
       expect(component.getComponentElement().querySelector('.ual-modal-content-description').textContent).toEqual(
-        `Install Fast Car to Continue`
+        'Install Fast Car to Continue'
       )
     })
 
     it('has empty text-box text when rendered', () => {
-      expect(component.getComponentElement().innerHTML).toContain(`<p class="ual-modal-text-box"></p>`)
+      expect(component.getComponentElement().innerHTML).toContain('<p class="ual-modal-text-box"></p>')
     })
 
     it('has Button Title text-box text when rendered', () => {
       component.open(baseAuthenticator)
       expect(component.getComponentElement().querySelector('.ual-modal-text-box').textContent).toEqual(
-        `To get started with Fast Car, install the app at the link below.`
+        'To get started with Fast Car, install the app at the link below.'
       )
     })
   })
@@ -105,7 +105,7 @@ describe('Download Authenticator Modal', () => {
       expect(onGoBackStub).toBeCalled()
     })
 
-    it(`doesn't call onClose when the modal is already closed`, () => {
+    it('doesn\'t call onClose when the modal is already closed', () => {
       component.close()
       onCloseStub.mockReset()
 

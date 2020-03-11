@@ -12,6 +12,7 @@ export class AuthButton extends UALJsAbstractBaseComponent {
 
   /**
    * Constructs an Auth Button
+   *
    * @param authButtonOptions { authenticator, showDownload, key, onClick }
    */
   constructor(authButtonOptions: AuthButtonOptions) {

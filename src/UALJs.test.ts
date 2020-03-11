@@ -41,7 +41,7 @@ describe('Authenticators', () => {
   afterEach(() => {
     localStorage.clear()
 
-    document.body.innerHTML = ``
+    document.body.innerHTML = ''
   })
 
   it('throw error when no autologin authenticators are provided', () => {
