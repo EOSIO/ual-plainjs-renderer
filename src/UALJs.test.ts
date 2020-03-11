@@ -5,6 +5,7 @@ import { UALJs } from './UALJs'
 
 import { AutologinAuthenticator } from './AuthMocks/AutologinAuthenticator'
 import { BaseMockAuthenticator } from './AuthMocks/BaseMockAuthenticator'
+import { InvalidateAuthenticator } from './AuthMocks/InvalidateAuthenticator'
 
 jest.useFakeTimers()
 // jest.useFakeTimers() changes the order in which promises are run
@@ -175,9 +176,11 @@ describe('Authenticators', () => {
     })
 
     it('logs in for non account name required', async () => {
-      const thirtyDaysFromNow = new Date(new Date().getTime() + (30 * 24 * 60 * 60 * 1000))
+      const invalidateSeconds = authenticator.shouldInvalidateAfter()
+      const invalidateAt = new Date()
+      invalidateAt.setSeconds(invalidateAt.getSeconds() + invalidateSeconds)
 
-      localStorage.setItem('ual-session-expiration', `${thirtyDaysFromNow.getTime()}`)
+      localStorage.setItem('ual-session-expiration', invalidateAt.toString())
       localStorage.setItem('ual-session-authenticator', authenticator.constructor.name)
 
       ual.init()
@@ -191,8 +194,11 @@ describe('Authenticators', () => {
 
       ual = createNewUALJs(authenticator, containerElement)
 
-      const thirtyDaysFromNow = new Date(new Date().getTime() + (30 * 24 * 60 * 60 * 1000))
-      localStorage.setItem('ual-session-expiration', `${thirtyDaysFromNow.getTime()}`)
+      const invalidateSeconds = authenticator.shouldInvalidateAfter()
+      const invalidateAt = new Date()
+      invalidateAt.setSeconds(invalidateAt.getSeconds() + invalidateSeconds)
+
+      localStorage.setItem('ual-session-expiration', invalidateAt.toString())
       localStorage.setItem('ual-session-authenticator', authenticator.constructor.name)
       localStorage.setItem('ual-session-account-name', 'reqacctname')
 
@@ -247,6 +253,53 @@ describe('Authenticators', () => {
       await runPromises()
 
       expect(authenticator.login).not.toBeCalled()
+    })
+  })
+
+  describe('invalidate', () => {
+    it('sets a short expiration that invalidates the next session', async () => {
+      authenticator = new InvalidateAuthenticator([], null)
+      authenticator.login = login
+
+      ual = createNewUALJs(authenticator, containerElement)
+
+      ual.init()
+      await ual.loginUser(authenticator, 'mycoolUser')
+
+      expect(localStorage.getItem('ual-session-expiration')).not.toBeNull()
+      expect(localStorage.getItem('ual-session-authenticator')).toEqual(authenticator.constructor.name)
+      expect(localStorage.getItem('ual-session-account-name')).toEqual('mycoolUser')
+
+      ual = createNewUALJs(authenticator, containerElement)
+
+      ual.init()
+      await runPromises()
+
+      expect(localStorage.getItem('ual-session-expiration')).toBeNull()
+      expect(localStorage.getItem('ual-session-authenticator')).toBeNull()
+      expect(localStorage.getItem('ual-session-account-name')).toBeNull()
+    })
+
+    it('invalidates on the second of ual-session-expiration instead of after', async () => {
+      const mockDate = new Date('2099-01-01T00:00:00')
+      const realDate = Date
+      // @ts-ignore
+      global.Date = class extends Date {
+        constructor(date) {
+          if (date) { super(date) }
+          return mockDate
+        }
+      }
+
+      localStorage.setItem('ual-session-expiration', mockDate.toString())
+      localStorage.setItem('ual-session-authenticator', authenticator.constructor.name)
+
+      ual.init()
+      await runPromises()
+
+      expect(authenticator.login).not.toHaveBeenCalled()
+
+      global.Date = realDate
     })
   })
 })
