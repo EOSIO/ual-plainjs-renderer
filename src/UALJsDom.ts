@@ -94,8 +94,7 @@ export class UALJsDom {
     this.containerElement.appendChild(this.authenticatorModal)
 
     // bind any tooltips on buttons, tippy loads asychronously and may not be initially available
-    let interval
-    interval = setInterval(() => {
+    const interval = setInterval(() => {
       if (!!window.tippy) {
         window.tippy(this.containerElement, {
           target: '.tippy-binding',
@@ -216,8 +215,8 @@ export class UALJsDom {
   }
 
   /**
-   *  Cleans up existing authenticators and redraws them so we can
-   *  respond to authenticator state changes
+   * Cleans up existing authenticators and redraws them so we can
+   * respond to authenticator state changes
    */
   private drawAuthenticatorsButtons() {
     // cleanup
