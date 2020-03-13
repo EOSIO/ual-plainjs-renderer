@@ -13,7 +13,7 @@
   "license": "MIT",
   "scripts": {
     "build": "rm -rf dist && tsc --build tsconfig.json",
-    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src",
     "example": "yarn build && mkdir dist/public && webpack --config webpack.config.js && nodemon server --exec babel-node -e js"
   },
   "devDependencies": {
@@ -22,13 +22,13 @@
     "@babel/node": "^7.8.7",
     "@babel/polyfill": "^7.8.7",
     "@babel/preset-env": "^7.8.7",
-    "@blockone/tslint-config-blockone": "1.0.0",
+    "@blockone/eslint-config-blockone": "^3.0.0",
     "babel-loader": "^8.0.4",
     "dotenv": "^8.2.0",
+    "eslint": "^6.8.0",
     "express": "^4.17.1",
     "html-webpack-plugin": "^3.2.0",
     "nodemon": "^2.0.2",
-    "tslint": "^5.11.0",
     "typescript": "^3.8.3",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"
@@ -40,7 +40,7 @@
     "eosjs": "20.0.3",
     "js-sha256": "0.9.0",
     "ual-ledger": "0.2.0",
-    "ual-plainjs-renderer": "file:../",
+    "ual-plainjs-renderer": "^0.2.0",
     "ual-scatter": "0.2.0",
     "universal-authenticator-library": "0.2.0"
   }

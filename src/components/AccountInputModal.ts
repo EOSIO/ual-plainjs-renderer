@@ -88,7 +88,7 @@ export class AccountInputModal extends UALJsAbstractBaseComponent {
       this.options.onClose()
     })
 
-    accountInputModal.querySelector(`.ual-go-back`)!.addEventListener('click', this.options.onGoBack)
+    accountInputModal.querySelector('.ual-go-back')!.addEventListener('click', this.options.onGoBack)
 
     return accountInputModal
   }
@@ -99,7 +99,7 @@ export class AccountInputModal extends UALJsAbstractBaseComponent {
    * @param inputError Error message to show
    */
   private showAccountNameInputError(inputError: string): void {
-    const accountInputError = this.dom.querySelector(`#ual-account-input-error`) as HTMLElement
+    const accountInputError = this.dom.querySelector('#ual-account-input-error') as HTMLElement
     accountInputError!.innerHTML = inputError
     accountInputError!.style.display = 'block'
   }
@@ -108,7 +108,7 @@ export class AccountInputModal extends UALJsAbstractBaseComponent {
    * Clears account input error and hides it
    */
   private clearAccountNameInputError(): void {
-    const accountInputError = this.dom.querySelector(`#ual-account-input-error`) as HTMLElement
+    const accountInputError = this.dom.querySelector('#ual-account-input-error') as HTMLElement
     accountInputError!.innerHTML = ''
     accountInputError!.style.display = 'none'
   }

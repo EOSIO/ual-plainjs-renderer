@@ -82,21 +82,21 @@ export class MessageModal extends UALJsAbstractBaseComponent {
   public setMessage(modalMessage: ModalMessage) {
     const { title = '', message, type = null } = modalMessage
 
-    const modalMessageDescription = this.dom.querySelector(`#ual-modal-message-description`)
-    const modalMessageContent = this.dom.querySelector(`#ual-modal-message`) as HTMLDivElement
+    const modalMessageDescription = this.dom.querySelector('#ual-modal-message-description')
+    const modalMessageContent = this.dom.querySelector('#ual-modal-message') as HTMLDivElement
 
     modalMessageDescription!.innerHTML = title
     modalMessageContent!.innerHTML = message
 
     switch (type) {
-    case MessageTypes.ERROR:
-      modalMessageContent!.style.color = 'red'
-      break
-    case MessageTypes.SUCCESS:
-      modalMessageContent!.style.color = 'green'
-      break
-    default:
-      modalMessageContent!.style.color = 'black'
+      case MessageTypes.ERROR:
+        modalMessageContent!.style.color = 'red'
+        break
+      case MessageTypes.SUCCESS:
+        modalMessageContent!.style.color = 'green'
+        break
+      default:
+        modalMessageContent!.style.color = 'black'
     }
   }
 

@@ -31,6 +31,7 @@ export class UALJsDom {
 
   /**
    * UnisonDom responsible for creating the UI elements of the Authenticator
+   *
    * @param Authenticator[] Array of authenticators to show the user
    * @param HTMLElement Container element for all Authenticator UI elements
    * @param buttonStyleOverride Allows the user to override the default styles of the auth start button
@@ -93,8 +94,7 @@ export class UALJsDom {
     this.containerElement.appendChild(this.authenticatorModal)
 
     // bind any tooltips on buttons, tippy loads asychronously and may not be initially available
-    let interval
-    interval = setInterval(() => {
+    const interval = setInterval(() => {
       if (!!window.tippy) {
         window.tippy(this.containerElement, {
           target: '.tippy-binding',
@@ -173,7 +173,7 @@ export class UALJsDom {
     this.reset()
 
     // show the modal overlay
-    document.getElementById(`ual-modal`)!.style.display = 'block'
+    document.getElementById('ual-modal')!.style.display = 'block'
 
     this.showAuthenticatorSelection()
 
@@ -215,12 +215,12 @@ export class UALJsDom {
   }
 
   /**
-   *  Cleans up existing authenticators and redraws them so we can
-   *  respond to authenticator state changes
+   * Cleans up existing authenticators and redraws them so we can
+   * respond to authenticator state changes
    */
   private drawAuthenticatorsButtons() {
     // cleanup
-    const listNode = document.getElementById(`ual-authenticators-list`)
+    const listNode = document.getElementById('ual-authenticators-list')
 
     // variation of this answer here for fast child removal
     // https://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript#answer-15771070
@@ -239,7 +239,7 @@ export class UALJsDom {
    * @param authenticators Authenticators to render
    */
   protected renderAuthenticationSelections(authenticators: Authenticator[]) {
-    const authenticatorsList = document.getElementById(`ual-authenticators-list`)!
+    const authenticatorsList = document.getElementById('ual-authenticators-list')!
 
     authenticators.forEach((authenticator: Authenticator) => {
       const authButton = new AuthButton({authenticator, onClick: () => {
@@ -266,7 +266,7 @@ export class UALJsDom {
       this.getAuthenticatorsView.hide()
     }
 
-    document.getElementById(`ual-modal`)!.style.display = 'none'
+    document.getElementById('ual-modal')!.style.display = 'none'
   }
 
   /**
@@ -329,14 +329,14 @@ export class UALJsDom {
    * Show Authenticator Selector view
    */
   private showAuthenticatorSelection() {
-    document.getElementById(`ual-modal-selection-content`)!.style.display = 'block'
+    document.getElementById('ual-modal-selection-content')!.style.display = 'block'
   }
 
   /**
    * Show Authenticator Selector view
    */
   private hideAuthenticatorSelection() {
-    document.getElementById(`ual-modal-selection-content`)!.style.display = 'none'
+    document.getElementById('ual-modal-selection-content')!.style.display = 'none'
   }
 
   /**
@@ -369,14 +369,14 @@ export class UALJsDom {
 
     this.reset()
     this.showAuthenticatorSelection()
-    document.getElementById(`ual-modal`)!.style.display = 'block'
+    document.getElementById('ual-modal')!.style.display = 'block'
   }
 
   /**
    * Adds login button watcher for displaying the auth modal
    */
   private attachLoginButtonWatcher(): void {
-    const button = document.getElementById(`ual-button`)
+    const button = document.getElementById('ual-button')
 
     button!.addEventListener('click', async () => {
       this.showAuthModal()
@@ -388,7 +388,7 @@ export class UALJsDom {
    */
   public createAuthenticatorModal(): HTMLElement {
     const modalDiv = document.createElement('div')
-    modalDiv.id = `ual-modal`
+    modalDiv.id = 'ual-modal'
 
     // Authenticator Selection Modal
     const authenticatorSelectionModal = document.createElement('div')
@@ -415,11 +415,11 @@ export class UALJsDom {
     `
     authenticatorSelectionModal.querySelector('.ual-modal-close')!.addEventListener('click', this.reset.bind(this))
     authenticatorSelectionModal.querySelector('.ual-open-learnMoreButton')!.addEventListener('click', () => {
-      document.getElementById(`ual-learnMoreContainer`)!.className = 'closed'
+      document.getElementById('ual-learnMoreContainer')!.className = 'closed'
     })
 
     authenticatorSelectionModal.querySelector('.ual-close-learnMoreButton')!.addEventListener('click', () => {
-      document.getElementById(`ual-learnMoreContainer`)!.className = 'opened'
+      document.getElementById('ual-learnMoreContainer')!.className = 'opened'
     })
 
     authenticatorSelectionModal.querySelector('.ual-modal-close')!.addEventListener('click', this.reset.bind(this))
@@ -459,8 +459,8 @@ export class UALJsDom {
    */
   public createButton(): HTMLButtonElement {
     const button = document.createElement('button')
-    button.id = `ual-button`
-    button.className = `ual-button-gen` // TODO: determine if this is needed
+    button.id = 'ual-button'
+    button.className = 'ual-button-gen' // TODO: determine if this is needed
     button.innerHTML = 'UAL Login'
 
     return button
@@ -468,6 +468,7 @@ export class UALJsDom {
 
   /**
    * Generates the CSS styles for the Auth start button
+   *
    * @param css Optional css override for user provided button styles
    */
   public createButtonStyles(css: string | boolean): HTMLStyleElement {

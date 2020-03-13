@@ -92,6 +92,7 @@ export class UALJs extends UAL {
 
   /**
    * Attempts to resume a users session if they previously logged in
+   *
    * @param authenticators Available authenticators for login
    */
   private attemptSessionLogin(authenticators: Authenticator[]) {

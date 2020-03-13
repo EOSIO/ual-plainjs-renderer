@@ -29,7 +29,7 @@ describe('Get Authenticator View', () => {
   })
 
   it('Has Title Text', () => {
-    expect(component.getComponentElement().innerHTML).toContain(`Pardon the interruption`)
+    expect(component.getComponentElement().innerHTML).toContain('Pardon the interruption')
   })
 
   it('hides when close is called', () => {
@@ -44,7 +44,7 @@ describe('Get Authenticator View', () => {
     expect(onCloseStub).toBeCalled()
   })
 
-  it(`doesn't call onClose when the modal is already closed`, () => {
+  it('doesn\'t call onClose when the modal is already closed', () => {
     component.close()
     onCloseStub.mockReset()
 
@@ -68,7 +68,7 @@ describe('Get Authenticator View', () => {
   it('Has Descriptor Text', () => {
     expect(component.getComponentElement().innerHTML).toContain(
       // tslint:disable-next-line:max-line-length
-      `Install one of our supported authenticators or ensure your authenticator is running and click <a class="ual-reset-link" href="#">here</a> to retry.`
+      'Install one of our supported authenticators or ensure your authenticator is running and click <a class="ual-reset-link" href="#">here</a> to retry.'
     )
   })
 

@@ -3,7 +3,7 @@ import { Ledger } from 'ual-ledger'
 import { UALJs } from 'ual-plainjs-renderer'
 import { Scatter } from 'ual-scatter'
 import { User } from 'universal-authenticator-library'
-import { MockAuthenticator } from './AuthMocks'
+import { MockAuthenticator } from './MockAuthenticator'
 import demoTransaction from './demo-transaction'
 
 // Example environment type definition
@@ -14,7 +14,7 @@ interface ExampleEnv {
   RPC_PORT: string
 }
 
-declare var EXAMPLE_ENV: ExampleEnv
+declare let EXAMPLE_ENV: ExampleEnv
 
 let loggedInUser: User
 
@@ -55,11 +55,37 @@ const ual = new UALJs(
   }
 )
 
-ual.init()
+const addLogoutButtonListener = () => {
+  const logoutButton = document.getElementById('btn-logout')
 
-addTransferButtonEventListener()
+  logoutButton!.addEventListener('click', async () => {
+    clearInterval(balanceUpdateInterval)
 
-function addTransferButtonEventListener() {
+    const transferDiv = document.getElementById('div-transfer')
+    transferDiv!.style.display = 'none'
+
+    ual.logoutUser()
+  })
+}
+
+const updateBalance = async () => {
+  const balanceTag = document.getElementById('p-transfer')
+
+  try {
+    const rpc = new JsonRpc(`${EXAMPLE_ENV.RPC_PROTOCOL}://${EXAMPLE_ENV.RPC_HOST}:${EXAMPLE_ENV.RPC_PORT}`)
+    const accountName = await loggedInUser.getAccountName()
+    const data = await rpc.get_account(accountName)
+
+    const { core_liquid_balance: balance } = data
+    balanceTag!.innerHTML = `Account Liquid Balance: ${balance}`
+
+  } catch (e) {
+    console.error(e)
+    balanceTag!.innerHTML = 'Unable to retrieve account balance at this time'
+  }
+}
+
+const addTransferButtonEventListener = () => {
   const transferButton = document.getElementById('btn-transfer')
 
   transferButton!.addEventListener('click', async () => {
@@ -75,34 +101,6 @@ function addTransferButtonEventListener() {
   })
 }
 
+ual.init()
+addTransferButtonEventListener()
 addLogoutButtonListener()
-
-function addLogoutButtonListener() {
-  const logoutButton = document.getElementById('btn-logout')
-
-  logoutButton!.addEventListener('click', async () => {
-    clearInterval(balanceUpdateInterval)
-
-    const transferDiv = document.getElementById('div-transfer')
-    transferDiv!.style.display = 'none'
-
-    ual.logoutUser()
-  })
-}
-
-async function updateBalance() {
-  const balanceTag = document.getElementById('p-transfer')
-
-  try {
-    const rpc = new JsonRpc(`${EXAMPLE_ENV.RPC_PROTOCOL}://${EXAMPLE_ENV.RPC_HOST}:${EXAMPLE_ENV.RPC_PORT}`)
-    const accountName = await loggedInUser.getAccountName()
-    const data = await rpc.get_account(accountName)
-
-    const { core_liquid_balance: balance } = data
-    balanceTag!.innerHTML = `Account Liquid Balance: ${balance}`
-
-  } catch (e) {
-    console.error(e)
-    balanceTag!.innerHTML = `Unable to retrieve account balance at this time`
-  }
-}

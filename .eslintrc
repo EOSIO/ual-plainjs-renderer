@@ -1,0 +1,7 @@
+{
+  "extends": "@blockone/blockone",
+  "rules": {
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
+  }
+}
