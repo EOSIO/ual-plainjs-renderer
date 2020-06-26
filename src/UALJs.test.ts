@@ -302,6 +302,13 @@ describe('Authenticators', () => {
       global.Date = realDate
     })
   })
+
+  describe('get authenticator name', () => {
+    it('should be able to get authenticator name', () => {
+      const expectedName = 'authenticator'
+      expect(authenticator.getName()).toBe(expectedName)
+    })
+  })
 })
 
 const sleep = (time: number) => {
