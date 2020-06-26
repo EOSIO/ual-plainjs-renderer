@@ -39,9 +39,9 @@
     "core-js": "3.6.4",
     "eosjs": "20.0.3",
     "js-sha256": "0.9.0",
-    "ual-ledger": "0.2.0",
-    "ual-plainjs-renderer": "^0.2.0",
-    "ual-scatter": "0.2.0",
-    "universal-authenticator-library": "0.2.0"
+    "ual-ledger": "0.3.0",
+    "ual-plainjs-renderer": "../",
+    "ual-scatter": "0.3.0",
+    "universal-authenticator-library": "0.3.0"
   }
 }
