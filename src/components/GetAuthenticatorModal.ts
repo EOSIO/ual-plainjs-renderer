@@ -53,7 +53,7 @@ export class GetAuthenticatorModal extends UALJsAbstractBaseComponent {
         </p>
         <p class="ual-modal-text-box">` +
           // tslint:disable-next-line:max-line-length
-          `Install one of our supported authenticators or ensure your authenticator is running and click <a class="ual-reset-link" href="#">here</a> to retry.` +
+          'Install one of our supported authenticators or ensure your authenticator is running and click <a class="ual-reset-link" href="#">here</a> to retry.' +
         `</p>
         <div id="ual-authenticators-download-list">
         </div>

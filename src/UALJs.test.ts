@@ -11,7 +11,7 @@ jest.useFakeTimers()
 // jest.useFakeTimers() changes the order in which promises are run
 // Issue: https://github.com/facebook/jest/pull/6876
 // Workaround: https://github.com/facebook/jest/issues/7151
-global.Promise = promisePolyFill
+global.Promise = promisePolyFill as any
 
 describe('Authenticators', () => {
   let containerElement: HTMLElement
@@ -41,7 +41,7 @@ describe('Authenticators', () => {
   afterEach(() => {
     localStorage.clear()
 
-    document.body.innerHTML = ``
+    document.body.innerHTML = ''
   })
 
   it('throw error when no autologin authenticators are provided', () => {
@@ -104,6 +104,7 @@ describe('Authenticators', () => {
 
       beforeEach(() => {
         authenticator.login = jest.fn().mockImplementation(() => { throw loginError })
+        console.error = jest.fn()
       })
 
       it('throws original caught error', async () => {
@@ -114,6 +115,7 @@ describe('Authenticators', () => {
           await ual.loginUser(authenticator)
           didThrow = false
         } catch (error) {
+          expect(console.error).toHaveBeenCalled()
           expect(error).toEqual(loginError)
         }
 
@@ -125,6 +127,7 @@ describe('Authenticators', () => {
           ual.init()
           await ual.loginUser(authenticator)
         } catch (error) {
+          expect(console.error).toHaveBeenCalled()
           expect(error).toEqual(loginError)
         }
 
@@ -297,6 +300,13 @@ describe('Authenticators', () => {
       expect(authenticator.login).not.toHaveBeenCalled()
 
       global.Date = realDate
+    })
+  })
+
+  describe('get authenticator name', () => {
+    it('should be able to get authenticator name', () => {
+      const expectedName = 'authenticator'
+      expect(authenticator.getName()).toBe(expectedName)
     })
   })
 })

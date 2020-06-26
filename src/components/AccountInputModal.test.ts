@@ -19,8 +19,7 @@ describe('Account Input Modal', () => {
 
     document.body.innerHTML = ''
 
-    let parentContainer
-    parentContainer = document.createElement('div')
+    const parentContainer = document.createElement('div')
     document.body.appendChild(parentContainer)
 
     component.attach(parentContainer)
