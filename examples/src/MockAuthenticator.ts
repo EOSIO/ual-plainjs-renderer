@@ -84,4 +84,8 @@ export class MockAuthenticator extends Authenticator {
   public requiresGetKeyConfirmation() {
     return false
   }
+
+  public getName(): string {
+    return 'authenticator'
+  }
 }
